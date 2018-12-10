@@ -29,10 +29,11 @@ using std::string;
 //* Commands I2C
 #define CATEGORY_CMD 0
 //* servo
-#define CMD_SERVO_ACTIVE 14
 #define CMD_SERVO_SETH 9
-#define CMD_SERVO_CCW 15 // aka Thatway
-#define CMD_SERVO_CW 16  // aka Thisway
+#define CMD_SERVO_ACTIVE 14
+#define CMD_SERVO_THISWAY 15
+#define CMD_SERVO_THATWAY 16
+#define CMD_SERVO_SET_ANGLE 17
 //* motor
 #define CMD_MOTOR_ACTIVE 7
 #define CMD_MOTOR_ONOFF 2
@@ -67,7 +68,7 @@ class GOGO_BRIGHT : public Device
 
 	bool wireWriteDataByte(uint8_t reg, uint8_t val);
 	bool wireWriteDataByte(uint8_t reg, uint8_t target, uint8_t val);
-	bool wireWriteDataByte(uint8_t reg, uint8_t target, uint8_t high_val, unit8_t low_val);
+	bool wireWriteDataByte(uint8_t reg, uint8_t target, uint8_t high_val, uint8_t low_val);
 
   public:
 	// constructor
@@ -107,9 +108,9 @@ class GOGO_BRIGHT : public Device
 	//? set servos head to input head_angle
 	bool setServoHead(int head_angle);
 	//? turn servos clockwise by input angle
-	bool turnServoCW(int cw_angle);
+	bool turnServoThisWay(int cw_angle);
 	//? turn servos counter-clockwise by input angle
-	bool turnServoCCW(int ccw_angle);
+	bool turnServoThatWay(int ccw_angle);
 };
 
 #endif

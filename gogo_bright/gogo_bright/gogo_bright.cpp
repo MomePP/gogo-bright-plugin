@@ -288,23 +288,23 @@ bool GOGO_BRIGHT::setServoHead(int head_angle)
 	if (head_angle < 0 || head_angle > 180)
 		return false;
 
-	return wireWriteDataByte(CMD_SERVO_SETH, 0, 0, head_angle);
+	return wireWriteDataByte(CMD_SERVO_SET_ANGLE, 0, 0, head_angle);
 }
 
-bool GOGO_BRIGHT::turnServoCW(int cw_angle)
+bool GOGO_BRIGHT::turnServoThisWay(int cw_angle)
 {
 	if (cw_angle < 0 || cw_angle > 180)
 		return false;
 
-	return wireWriteDataByte(CMD_SERVO_CW, 0, 0, cw_angle);
+	return wireWriteDataByte(CMD_SERVO_THISWAY, 0, 0, cw_angle);
 }
 
-bool GOGO_BRIGHT::turnServoCCW(int ccw_angle)
+bool GOGO_BRIGHT::turnServoThatWay(int ccw_angle)
 {
 	if (ccw_angle < 0 || ccw_angle > 180)
 		return false;
 
-	return wireWriteDataByte(CMD_SERVO_CCW, 0, 0, ccw_angle);
+	return wireWriteDataByte(CMD_SERVO_THATWAY, 0, 0, ccw_angle);
 }
 
 //* ************* I2C functions *************

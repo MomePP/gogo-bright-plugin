@@ -76,12 +76,12 @@ Blockly.JavaScript['gogo_bright.servo_seth'] = function (block) {
 
 Blockly.JavaScript['gogo_bright.servo_turn_cw'] = function (block) {
 	var valueHeading = Blockly.JavaScript.valueToCode(block, 'heading', Blockly.JavaScript.ORDER_NONE)
-	var code = `DEV_I2C0.GOGO_BRIGHT().turnServoCW(${filterNumber(valueHeading)});\n`
+	var code = `DEV_I2C0.GOGO_BRIGHT().turnServoThisWay(${filterNumber(valueHeading)});\n`
 	return code
 }
 
 Blockly.JavaScript['gogo_bright.servo_turn_ccw'] = function (block) {
 	var valueHeading = Blockly.JavaScript.valueToCode(block, 'heading', Blockly.JavaScript.ORDER_NONE)
-	var code = `DEV_I2C0.GOGO_BRIGHT().turnServoCCW(${filterNumber(valueHeading)});\n`
+	var code = `DEV_I2C0.GOGO_BRIGHT().turnServoThatWay(${filterNumber(valueHeading)});\n`
 	return code
 }
