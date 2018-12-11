@@ -40,14 +40,14 @@ Blockly.JavaScript['gogo_bright.motor_action_power'] = function (block) {
 	return code
 }
 
-Blockly.JavaScript['gogo_bright.motor_action_thisway'] = function () {
+Blockly.JavaScript['gogo_bright.motor_action_cw'] = function () {
 	var dropdownThisway = this.getFieldValue('clockwise')
-	var code = 'DEV_I2C0.GOGO_BRIGHT().' + (dropdownThisway == 'cw' ? 'turnOutputThisWay' : 'turnOutputThatWay') + '();\n'
+	var code = 'DEV_I2C0.GOGO_BRIGHT().' + (dropdownThisway == 'cw' ? 'turnOutputCW' : 'turnOutputCCW') + '();\n'
 	return code
 }
 
 Blockly.JavaScript['gogo_bright.motor_action_rd'] = function () {
-	var code = 'DEV_I2C0.GOGO_BRIGHT().toggleOutputWay();\n'
+	var code = 'DEV_I2C0.GOGO_BRIGHT().reverseOutputDirection();\n'
 	return code
 }
 
@@ -70,18 +70,18 @@ Blockly.JavaScript['gogo_bright.action_servo'] = function () {
 
 Blockly.JavaScript['gogo_bright.servo_seth'] = function (block) {
 	var valueHeading = Blockly.JavaScript.valueToCode(block, 'heading', Blockly.JavaScript.ORDER_NONE)
-	var code = `DEV_I2C0.GOGO_BRIGHT().setServoHead(${filterNumber(valueHeading)});\n`
+	var code = `DEV_I2C0.GOGO_BRIGHT().setServoAngle(${filterNumber(valueHeading)});\n`
 	return code
 }
 
 Blockly.JavaScript['gogo_bright.servo_turn_cw'] = function (block) {
 	var valueHeading = Blockly.JavaScript.valueToCode(block, 'heading', Blockly.JavaScript.ORDER_NONE)
-	var code = `DEV_I2C0.GOGO_BRIGHT().turnServoThisWay(${filterNumber(valueHeading)});\n`
+	var code = `DEV_I2C0.GOGO_BRIGHT().turnServoCW(${filterNumber(valueHeading)});\n`
 	return code
 }
 
 Blockly.JavaScript['gogo_bright.servo_turn_ccw'] = function (block) {
 	var valueHeading = Blockly.JavaScript.valueToCode(block, 'heading', Blockly.JavaScript.ORDER_NONE)
-	var code = `DEV_I2C0.GOGO_BRIGHT().turnServoThatWay(${filterNumber(valueHeading)});\n`
+	var code = `DEV_I2C0.GOGO_BRIGHT().turnServoCCW(${filterNumber(valueHeading)});\n`
 	return code
 }

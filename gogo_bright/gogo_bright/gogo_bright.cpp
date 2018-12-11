@@ -236,17 +236,17 @@ bool GOGO_BRIGHT::turnOutputOFF(void)
 	return wireWriteDataByte(CMD_MOTOR_ONOFF, 0, 0);
 }
 
-bool GOGO_BRIGHT::turnOutputThisWay(void)
+bool GOGO_BRIGHT::turnOutputCW(void)
 {
 	return wireWriteDataByte(CMD_MOTOR_DIR, 0, 1);
 }
 
-bool GOGO_BRIGHT::turnOutputThatWay(void)
+bool GOGO_BRIGHT::turnOutputCCw(void)
 {
 	return wireWriteDataByte(CMD_MOTOR_DIR, 0, 0);
 }
 
-bool GOGO_BRIGHT::toggleOutputWay(void)
+bool GOGO_BRIGHT::reverseOutputDirection(void)
 {
 	return wireWriteDataByte(CMD_MOTOR_RD, 0); // currently active ports
 }
@@ -283,7 +283,7 @@ bool GOGO_BRIGHT::talkToServo(string servo_port)
 	return wireWriteDataByte(CMD_SERVO_ACTIVE, servoBits);
 }
 
-bool GOGO_BRIGHT::setServoHead(int head_angle)
+bool GOGO_BRIGHT::setServoAngle(int head_angle)
 {
 	if (head_angle < 0 || head_angle > 180)
 		return false;
@@ -291,25 +291,25 @@ bool GOGO_BRIGHT::setServoHead(int head_angle)
 	return wireWriteDataByte(CMD_SERVO_SET_ANGLE, 0, 0, head_angle);
 }
 
-bool GOGO_BRIGHT::turnServoThisWay(int cw_angle)
+bool GOGO_BRIGHT::turnServoCW(int cw_angle)
 {
 	if (cw_angle < 0 || cw_angle > 180)
 		return false;
 
-	return wireWriteDataByte(CMD_SERVO_THISWAY, 0, 0, cw_angle);
+	return wireWriteDataByte(CMD_SERVO_CW, 0, 0, cw_angle);
 }
 
-bool GOGO_BRIGHT::turnServoThatWay(int ccw_angle)
+bool GOGO_BRIGHT::turnServoCCW(int ccw_angle)
 {
 	if (ccw_angle < 0 || ccw_angle > 180)
 		return false;
 
-	return wireWriteDataByte(CMD_SERVO_THATWAY, 0, 0, ccw_angle);
+	return wireWriteDataByte(CMD_SERVO_CCW, 0, 0, ccw_angle);
 }
 
 //* ************* I2C functions *************
 
-bool GOGO_BRIGHT::wireWriteDataByte(uint8_t reg, uint8_t val)
+bool GOGO_BRIGHT::wireWriteDataByte(uint8_t cmd, uint8_t param1)
 {
 	uint8_t data[3];
 
@@ -319,13 +319,13 @@ bool GOGO_BRIGHT::wireWriteDataByte(uint8_t reg, uint8_t val)
 	}
 
 	data[0] = CATEGORY_CMD;
-	data[1] = reg;
-	data[2] = val;
+	data[1] = cmd;
+	data[2] = param1;
 
 	return (i2c->write(channel, address, data, 3) == ESP_OK);
 }
 
-bool GOGO_BRIGHT::wireWriteDataByte(uint8_t reg, uint8_t target, uint8_t val)
+bool GOGO_BRIGHT::wireWriteDataByte(uint8_t cmd, uint8_t param1, uint8_t param2)
 {
 	uint8_t data[4];
 
@@ -335,14 +335,14 @@ bool GOGO_BRIGHT::wireWriteDataByte(uint8_t reg, uint8_t target, uint8_t val)
 	}
 
 	data[0] = CATEGORY_CMD;
-	data[1] = reg;
-	data[2] = target;
-	data[3] = val;
+	data[1] = cmd;
+	data[2] = param1;
+	data[3] = param2;
 
 	return (i2c->write(channel, address, data, 4) == ESP_OK);
 }
 
-bool GOGO_BRIGHT::wireWriteDataByte(uint8_t reg, uint8_t target, uint8_t high_val, uint8_t low_val)
+bool GOGO_BRIGHT::wireWriteDataByte(uint8_t cmd, uint8_t param1, uint8_t param2, uint8_t param3)
 {
 	uint8_t data[5];
 
@@ -352,10 +352,10 @@ bool GOGO_BRIGHT::wireWriteDataByte(uint8_t reg, uint8_t target, uint8_t high_va
 	}
 
 	data[0] = CATEGORY_CMD;
-	data[1] = reg;
-	data[2] = target;
-	data[3] = high_val;
-	data[4] = low_val;
+	data[1] = cmd;
+	data[2] = param1;
+	data[3] = param2;
+	data[4] = param3;
 
 	return (i2c->write(channel, address, data, 5) == ESP_OK);
 }
