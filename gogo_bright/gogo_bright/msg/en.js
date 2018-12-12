@@ -7,7 +7,7 @@ Blockly.Msg.SENSOR_SENSOR = "Sensor"
 // ********************* Motor ********************* //
 Blockly.Msg.COLOR_MOTOR = "#f3a73c"
 
-Blockly.Msg.MOTOR_TALK_TO = "talk to motor"
+Blockly.Msg.MOTOR_TALK_TO = "talk to output"
 Blockly.Msg.MOTOR_TALK_TO_TOOLTIP = "Selects specific motor(s) to control."
 Blockly.Msg.MOTOR_TURN = "turn"
 Blockly.Msg.MOTOR_ON = "on"

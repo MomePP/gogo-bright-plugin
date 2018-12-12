@@ -6,7 +6,7 @@ Blockly.Msg.SENSOR_SENSOR = "เซ็นเซอร์"
 // ********************* Motor ********************* //
 Blockly.Msg.COLOR_MOTOR = "#f3a73c"
 
-Blockly.Msg.MOTOR_TALK_TO = "สั่งงานมอเตอร์"
+Blockly.Msg.MOTOR_TALK_TO = "สั่งงานเอาต์พุต"
 Blockly.Msg.MOTOR_TALK_TO_TOOLTIP = "Selects specific motor(s) to control."
 Blockly.Msg.MOTOR_TURN = "ให้"
 Blockly.Msg.MOTOR_ON = "เปิด"

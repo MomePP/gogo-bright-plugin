@@ -16,13 +16,13 @@ Blockly.JavaScript['gogo_bright.input_sensor'] = function(block) {
 Blockly.JavaScript['gogo_bright.action_motor'] = function () {
 	var checkboxA = this.getFieldValue('a')
 	var checkboxB = this.getFieldValue('b')
-	var checkboxC = this.getFieldValue('c')
-	var checkboxD = this.getFieldValue('d')
+	// var checkboxC = this.getFieldValue('c')
+	// var checkboxD = this.getFieldValue('d')
 
 	var code = 'DEV_I2C0.GOGO_BRIGHT().talkToOutput("' + (checkboxA === 'TRUE' ? 'a' : '') +
 		(checkboxB === 'TRUE' ? 'b' : '') +
-		(checkboxC === 'TRUE' ? 'c' : '') +
-		(checkboxD === 'TRUE' ? 'd' : '') +
+		// (checkboxC === 'TRUE' ? 'c' : '') +
+		// (checkboxD === 'TRUE' ? 'd' : '') +
 		'");\n'
 	if (code === 'DEV_I2C0.GOGO_BRIGHT().talkToOutput("");\n') { code = '\n' }
 	return code;

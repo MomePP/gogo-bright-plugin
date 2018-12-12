@@ -28,8 +28,8 @@ Blockly.Blocks['gogo_bright.action_motor'] = {
 			.appendField(Blockly.Msg.MOTOR_TALK_TO)
 			.appendField(new Blockly.FieldCheckbox('FALSE'), 'a').appendField('A ')
 			.appendField(new Blockly.FieldCheckbox('FALSE'), 'b').appendField('B ')
-			.appendField(new Blockly.FieldCheckbox('FALSE'), 'c').appendField('C ')
-			.appendField(new Blockly.FieldCheckbox('FALSE'), 'd').appendField('D')
+			// .appendField(new Blockly.FieldCheckbox('FALSE'), 'c').appendField('C ')
+			// .appendField(new Blockly.FieldCheckbox('FALSE'), 'd').appendField('D')
 
 		this.setPreviousStatement(true, null)
 		this.setNextStatement(true, null)
