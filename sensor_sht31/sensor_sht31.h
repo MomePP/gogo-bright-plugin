@@ -1,17 +1,15 @@
-#ifndef __SENSOR_DHT12_H__
-#define __SENSOR_DHT12_H__
-
-#include <string>
-using std::string;
+#ifndef __SENSOR_SHT31_H__
+#define __SENSOR_SHT31_H__
 
 #include "driver.h"
 #include "device.h"
 #include "i2c-dev.h"
 
-#define SENSOR_DHT12_POLLING_MS 1000
-#define SENSOR_DHT12_I2C_ADDRESS 0x5C
+#define SENSOR_SHT31_POLLING_MS 1000
+#define SENSOR_SHT31_I2C_ADDRESS 0x44
+#define SENSOR_SHT31_HIGHREP 0x2400
 
-class SENSOR_DHT12 : public Device
+class SENSOR_SHT31 : public Device
 {
 private:
 	enum
@@ -23,20 +21,18 @@ private:
 	} state;
 
 	TickType_t tickcnt, polling_tickcnt;
-	bool first_read;
 	bool i2c_bus_flag = 0;
 
 	I2CDev *i2c;
 
-	float temperature;
-	float humidity;
+	double temperature;
+	double humidity;
 
-	uint8_t initCmd = 0;
-	uint8_t raw_data[5];
+	uint8_t crc8(const uint8_t *data, int size);
 
 public:
 	// constructor
-	SENSOR_DHT12();
+	SENSOR_SHT31(void);
 	// override
 	void init(void);
 	void process(Driver *drv);
@@ -46,10 +42,9 @@ public:
 	bool prop_attr(int index, char *attr);
 	bool prop_read(int index, char *value);
 	bool prop_write(int index, char *value);
-
-	//* ********************* I2C port functions *********************
-	float readTemp(void);
-	float readHumi(void);
+	// method
+	double readTemp(void);
+	double readHumi(void);
 };
 
 #endif

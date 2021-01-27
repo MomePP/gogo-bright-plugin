@@ -8,8 +8,6 @@ using std::string;
 #include "device.h"
 #include "i2c-dev.h"
 
-#define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
-
 #define SENSOR_HM3301_POLLING_MS 1000
 #define SENSOR_HM3301_I2C_ADDRESS 0x40
 #define SENSOR_HM3301_DATA_SIZE 29

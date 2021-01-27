@@ -14,7 +14,6 @@ using std::string;
 
 //* ////////////////////////////////////
 //* Register map
-#define REG_GOGOBRIGHT_ID 0
 #define REG_SPECIAL_PORT_VALUE 28
 
 #define CMD_SPECIAL_ULTRASONIC 21
