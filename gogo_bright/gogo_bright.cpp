@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <math.h>
 #include <locale>
 #include "esp_system.h"
@@ -15,9 +16,10 @@ GOGO_BRIGHT::GOGO_BRIGHT()
 void GOGO_BRIGHT::init(void)
 {
 	first_read = true;
-	// illuminance = 0;
 	// sensor_values;
 	state = s_detect;
+
+    i2c_set_timeout(I2C_NUM_1, 40000);
 }
 
 int GOGO_BRIGHT::prop_count(void)
@@ -224,14 +226,14 @@ bool GOGO_BRIGHT::setOutputPower(int power)
 	if (power < 0 || power > 100)
 		return false;
 
-	return wireWriteDataByte(CMD_MOTOR_PWR, 0, 0, power);
+	return wireWriteDataByte(CMD_MOTOR_PWR, 0, 0, (uint8_t)power);
 }
 
-bool GOGO_BRIGHT::turnOutputON(void)
+bool GOGO_BRIGHT::turnOutputOn(void)
 {
 	return wireWriteDataByte(CMD_MOTOR_ONOFF, 0, 1);
 }
-bool GOGO_BRIGHT::turnOutputOFF(void)
+bool GOGO_BRIGHT::turnOutputOff(void)
 {
 	return wireWriteDataByte(CMD_MOTOR_ONOFF, 0, 0);
 }
@@ -241,7 +243,7 @@ bool GOGO_BRIGHT::turnOutputCW(void)
 	return wireWriteDataByte(CMD_MOTOR_DIR, 0, 1);
 }
 
-bool GOGO_BRIGHT::turnOutputCCw(void)
+bool GOGO_BRIGHT::turnOutputCCW(void)
 {
 	return wireWriteDataByte(CMD_MOTOR_DIR, 0, 0);
 }
@@ -288,7 +290,22 @@ bool GOGO_BRIGHT::setServoAngle(int head_angle)
 	if (head_angle < 0 || head_angle > 180)
 		return false;
 
-	return wireWriteDataByte(CMD_SERVO_SET_ANGLE, 0, 0, head_angle);
+	return wireWriteDataByte(CMD_SERVO_SET_ANGLE, 0, 0, (uint8_t)head_angle);
+}
+
+bool GOGO_BRIGHT::setServoDuty(int port, int percentage)
+{
+	if (port < 0 || port > 4)
+		return false;
+
+	if (percentage < 0 || percentage > 100)
+		return false;
+		
+	if (port > 0) {
+		port = 1 << (port-1);
+	}
+
+	return wireWriteDataByte(CMD_SERVO_SET_DUTY, port, 0, (uint8_t)percentage);
 }
 
 bool GOGO_BRIGHT::turnServoCW(int cw_angle)
@@ -296,7 +313,7 @@ bool GOGO_BRIGHT::turnServoCW(int cw_angle)
 	if (cw_angle < 0 || cw_angle > 180)
 		return false;
 
-	return wireWriteDataByte(CMD_SERVO_CW, 0, 0, cw_angle);
+	return wireWriteDataByte(CMD_SERVO_CW, 0, 0, (uint8_t)cw_angle);
 }
 
 bool GOGO_BRIGHT::turnServoCCW(int ccw_angle)
@@ -304,7 +321,7 @@ bool GOGO_BRIGHT::turnServoCCW(int ccw_angle)
 	if (ccw_angle < 0 || ccw_angle > 180)
 		return false;
 
-	return wireWriteDataByte(CMD_SERVO_CCW, 0, 0, ccw_angle);
+	return wireWriteDataByte(CMD_SERVO_CCW, 0, 0, (uint8_t)ccw_angle);
 }
 
 //* ************* I2C functions *************
@@ -317,6 +334,9 @@ bool GOGO_BRIGHT::wireWriteDataByte(uint8_t cmd, uint8_t param1)
 	{
 		return false;
 	}
+
+	// ***** Sleep for 1.5 ms *****
+	usleep(1500);
 
 	data[0] = CATEGORY_CMD;
 	data[1] = cmd;
@@ -334,6 +354,9 @@ bool GOGO_BRIGHT::wireWriteDataByte(uint8_t cmd, uint8_t param1, uint8_t param2)
 		return false;
 	}
 
+	// ***** Sleep for 1.5 ms *****
+	usleep(1500);
+
 	data[0] = CATEGORY_CMD;
 	data[1] = cmd;
 	data[2] = param1;
@@ -350,6 +373,9 @@ bool GOGO_BRIGHT::wireWriteDataByte(uint8_t cmd, uint8_t param1, uint8_t param2,
 	{
 		return false;
 	}
+
+	// ***** Sleep for 1.5 ms *****
+	usleep(1500);
 
 	data[0] = CATEGORY_CMD;
 	data[1] = cmd;
