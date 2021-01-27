@@ -31,15 +31,15 @@ using std::string;
 //* servo
 #define CMD_SERVO_SETH 9
 #define CMD_SERVO_ACTIVE 14
-#define CMD_SERVO_CW 15
-#define CMD_SERVO_CCW 16
+#define CMD_SERVO_CCW 15
+#define CMD_SERVO_CW 16
 #define CMD_SERVO_SET_ANGLE 17
+#define CMD_SERVO_SET_DUTY 19
+
 //* motor
 #define CMD_MOTOR_ACTIVE 7
 #define CMD_MOTOR_ONOFF 2
-// #define CMD_MOTOR_OFF 51
 #define CMD_MOTOR_DIR 3
-// #define CMD_MOTOR_CW 53
 #define CMD_MOTOR_RD 4
 #define CMD_MOTOR_PWR 6
 
@@ -58,8 +58,6 @@ class GOGO_BRIGHT : public Device
 	TickType_t tickcnt, polling_tickcnt;
 	bool first_read;
 	bool i2c_bus_flag = 0;
-	// double illuminance;
-	// double calc_lux(unsigned int ch0, unsigned int ch1);
 
 	I2CDev *i2c;
 	int sensor_values[4];
@@ -81,7 +79,6 @@ class GOGO_BRIGHT : public Device
 	bool prop_read(int index, char *value);
 	bool prop_write(int index, char *value);
 	// method
-	double get_illuminance(void);
 
 	//* ********************* Input port functions *********************
 	//? get sensors value from input port 1-4
@@ -93,11 +90,11 @@ class GOGO_BRIGHT : public Device
 	// //? set output power
 	bool setOutputPower(int power);
 	// //? turn outputs on or off
-	bool turnOutputON(void);
-	bool turnOutputOFF(void);
+	bool turnOutputOn(void);
+	bool turnOutputOff(void);
 	// //? turn outputs direction
 	bool turnOutputCW(void);
-	bool turnOutputCCw(void);
+	bool turnOutputCCW(void);
 	bool reverseOutputDirection(void);
 
 	//* ********************* Servo functions *********************
@@ -105,6 +102,8 @@ class GOGO_BRIGHT : public Device
 	bool talkToServo(string servo_port);
 	//? set servos head to input head_angle
 	bool setServoAngle(int head_angle);
+	//? set duty to servo ports
+	bool setServoDuty(int port, int percentage);
 	//? turn servos clockwise by input angle
 	bool turnServoCW(int cw_angle);
 	//? turn servos counter-clockwise by input angle
